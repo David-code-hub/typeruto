@@ -31,9 +31,9 @@
         </div>
       </div>
 
-      <div class="font-mono text-3xl break-words" v-else>
+      <div class="font-mono flex flex-row text-3xl break-words" v-else>
         <span
-          class="text-gray-400"
+          class="text-gray-400 flex"
           v-for="(letter, index) in quote"
           :key="letter + index"
           :id="letter + index"
@@ -43,22 +43,27 @@
       </div>
     </div>
   </div>
-  <div class="w-[3px] bg-black h-7 animate-pulse"></div>
+  <div
+    id="typing-cursor"
+    class="rounded-full w-[4px] mx-1 bg-black h-9 animate-pulse"
+  ></div>
 </template>
 
 <script setup lang="ts">
 const quote = ref("");
 const loading = ref(false);
 const index = ref(0);
+const currentLetterID = computed(() => quote.value[index.value] + index.value);
 
 function checkTyping(event: KeyboardEvent) {
   const splitQuoteByIndex = quote.value[index.value];
-  const spanElement = document.getElementById(splitQuoteByIndex + index.value);
+  const spanElement = document.getElementById(currentLetterID.value);
 
   if (splitQuoteByIndex === "_" ? " " : splitQuoteByIndex === event.key) {
-    spanElement?.classList.remove("text-red-700");
+    spanElement?.classList.remove("text-red-700", "text-gray-400");
     spanElement?.classList.add("text-black");
     index.value += 1;
+    setInitialCursor();
   } else {
     spanElement?.classList.remove("text-black");
     spanElement?.classList.add("text-red-700");
@@ -66,15 +71,31 @@ function checkTyping(event: KeyboardEvent) {
 }
 
 async function getNextQuote() {
+  index.value = 0;
   try {
     loading.value = true;
     const response = await fetch("https://dummyjson.com/quotes/random");
     quote.value = (await response.json()).quote.replace(/ /g, "_").split("");
+
+    // wait for dom to load elments needed for cursor
+    setTimeout(() => {
+      setInitialCursor();
+    }, 100);
   } catch (error) {
     console.error("Error while fetching quote :", error);
   } finally {
     loading.value = false;
   }
+}
+
+function setInitialCursor() {
+  const cursor = document.getElementById("typing-cursor");
+  const letter = document.getElementById(currentLetterID.value);
+  console.log("current letter on cursor :", currentLetterID.value);
+  if (cursor && letter) {
+    console.log("inside set cursor");
+    letter.insertBefore(cursor, letter.firstChild);
+  } else console.error("Cursor or letter element not found :", cursor, letter);
 }
 
 onMounted(() => {
