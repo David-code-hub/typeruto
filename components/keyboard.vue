@@ -2,13 +2,24 @@
   <div>
     <div>
       <div class="flex justify-between mb-7 items-center">
-        <div>wpd:60 accuracy: 89%</div>
+        <div class="flex gap-3 text-sm">
+          <div>
+            <Icon name="simple-line-icons:speedometer" class="size-4" />
+            Speed:
+
+            <span class="text-black font-semibold"> 60wpm </span>
+          </div>
+          <div>
+            Accuracy:
+            <span class="text-green-600 font-semibold"> 89%</span>
+          </div>
+        </div>
         <div>
           <button
             @click="getNextQuote"
-            class="duration-300 hover:bg-gray-100 py-1 px-2 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 hover:bg-gray-100 py-1 px-2 rounded-lg flex gap-1 items-center"
           >
-            <Icon name="simple-line-icons:reload" class="size-5" />
+            <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
           </button>
         </div>
@@ -46,10 +57,10 @@ function checkTyping(event: KeyboardEvent) {
 
   if (splitQuoteByIndex === "_" ? " " : splitQuoteByIndex === event.key) {
     spanElement?.classList.remove("text-red-700");
-    spanElement?.classList.add("text-green-700");
+    spanElement?.classList.add("text-black");
     index.value += 1;
   } else {
-    spanElement?.classList.remove("text-green-700");
+    spanElement?.classList.remove("text-black");
     spanElement?.classList.add("text-red-700");
   }
 }
