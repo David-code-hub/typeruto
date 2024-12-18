@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full">
+  <div class="w-full" id="keyboard-root">
     <div>
-      <div class="flex justify-between mb-7 items-center">
+      <div class="flex justify-between mb-12 items-center">
         <div class="flex gap-3 items-center text-md">
           <div class="flex items-center gap-2">
             <Icon name="simple-line-icons:speedometer" class="size-5" />
@@ -68,15 +68,13 @@
           :key="letter + index"
           :id="letter + index"
         >
-          {{ letter === " " ? "_" : letter }}
+          <span :class="{ 'opacity-0': letter === ' ' }">
+            {{ letter === " " ? "_" : letter }}
+          </span>
         </span>
       </div>
     </div>
   </div>
-  <div
-    id="typing-cursor"
-    class="rounded-full w-[4px] bg-black h-9 animate-flicker"
-  ></div>
 </template>
 
 <script setup lang="ts">
@@ -91,45 +89,65 @@ const currentLetterID = computed(() => quote.value[index.value] + index.value);
 const changeTextCase = () => {
   quote.value = isUppercase.value
     ? rawQuote.value
-    : quote.value.map((letter: string) => letter.toLowerCase());
+    : Array.isArray(quote.value)
+    ? quote.value.map((letter: string) => letter.toLowerCase())
+    : (quote.value as string)
+        .split("")
+        .map((letter: string) => letter.toLowerCase());
+
+  // reset all letter
+  resetLetters();
 };
 
-function checkTyping(event: KeyboardEvent) {
+const resetLetters = () => {
+  index.value = 0;
+
+  setInitialCursor(currentLetterID.value);
+};
+
+const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
+
+  if (event.code === "CapsLock") return;
 
   if (event.code === "Backspace") {
     index.value = index.value === 0 ? index.value : (index.value -= 1);
     const spanElement = document.getElementById(currentLetterID.value);
-    spanElement?.classList.remove("text-black", "text-red-700");
-    spanElement?.classList.add("text-gray-400");
+    spanElement?.classList.remove(...letterClasses.isBackspace.remove);
+    spanElement?.classList.add(...letterClasses.isBackspace.add);
     setInitialCursor(currentLetterID.value);
   } else if (splitQuoteByIndex === event.key) {
-    spanElement?.classList.remove("text-red-700", "text-gray-400");
-    spanElement?.classList.add("text-black");
+    // isCorrect
+    spanElement?.classList.remove(...letterClasses.isCorrect.remove);
+    spanElement?.classList.add(...letterClasses.isCorrect.add);
     index.value += 1;
     setInitialCursor(currentLetterID.value);
   } else {
-    spanElement?.classList.remove("text-black");
-    spanElement?.classList.add("text-red-700");
+    // isInCorrect
+    spanElement?.classList.remove(...letterClasses.isInCorrect.remove);
+    spanElement?.classList.add(...letterClasses.isInCorrect.add);
     mistakes.value += 1;
+    index.value += 1;
+    setInitialCursor(currentLetterID.value);
   }
-}
+};
 
-async function handleGetNextQuote() {
+const handleGetNextQuote = async () => {
   index.value = 0;
   mistakes.value = 0;
-
   loading.value = true;
-  console.log("next quote current letter :", currentLetterID.value);
-  rawQuote.value = await getNextQuote();
+
+  rawQuote.value = await getNextQuote(isUppercase.value);
+
   changeTextCase();
+
   loading.value = false;
-  console.log("qoute after next quote :", quote.value);
-}
+};
 
 onMounted(() => {
   window.addEventListener("keydown", checkTyping);
+  createCursorElement();
   handleGetNextQuote();
 });
 
