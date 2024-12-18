@@ -22,10 +22,10 @@
           <button
             @click="
               isUppercase = !isUppercase;
-              getNextQuote();
+              changeTextCase();
             "
             class="text-sm duration-300 p-2 rounded-lg flex gap-1 items-center"
-            :class="{ 'bg-gray-100': isUppercase }"
+            :class="{ 'text-green-500 ': isUppercase }"
           >
             <Icon name="simple-line-icons:arrow-up-circle" class="size-6" />
             Uppercase
@@ -70,17 +70,30 @@
 
 <script setup lang="ts">
 const quote = ref(Array<string>());
+const rawQuote = ref(Array<string>());
 const loading = ref(false);
 const index = ref(0);
 const mistakes = ref(0);
 const isUppercase = ref(true);
 const currentLetterID = computed(() => quote.value[index.value] + index.value);
 
+const changeTextCase = () => {
+  quote.value = isUppercase.value
+    ? rawQuote.value
+    : quote.value.map((letter: string) => letter.toLowerCase());
+};
+
 function checkTyping(event: KeyboardEvent) {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
 
-  if (splitQuoteByIndex === event.key) {
+  if (event.code === "Backspace") {
+    index.value = index.value === 0 ? index.value : (index.value -= 1);
+    const spanElement = document.getElementById(currentLetterID.value);
+    spanElement?.classList.remove("text-black", "text-red-700");
+    spanElement?.classList.add("text-gray-400");
+    setInitialCursor();
+  } else if (splitQuoteByIndex === event.key) {
     spanElement?.classList.remove("text-red-700", "text-gray-400");
     spanElement?.classList.add("text-black");
     index.value += 1;
@@ -100,9 +113,8 @@ async function getNextQuote() {
     loading.value = true;
     const response = await fetch("https://dummyjson.com/quotes/random");
     const data = await response.json();
-    quote.value = (
-      isUppercase.value ? data.quote : data.quote.toLowerCase()
-    ).split("");
+    rawQuote.value = data.quote.split("");
+    changeTextCase();
 
     // wait for dom to load elments needed for cursor
     setTimeout(() => {
@@ -118,14 +130,8 @@ async function getNextQuote() {
 function setInitialCursor() {
   const cursor = document.getElementById("typing-cursor");
   const letter = document.getElementById(currentLetterID.value);
-  console.log(
-    "current letter on cursor :",
-    cursor,
-    letter,
-    currentLetterID.value
-  );
+
   if (cursor && letter) {
-    console.log("inside set cursor");
     letter.insertBefore(cursor, letter.firstChild);
   } else console.error("Cursor or letter element not found :", cursor, letter);
 }
