@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 const quote = ref(Array<string>());
-const rawQuote = ref(Array<string>());
+const rawQuote = ref("");
 const loading = ref(true);
 const index = ref(0);
 const mistakes = ref(0);
@@ -97,13 +97,9 @@ const handleTimerCountdown = () => {
 
 const changeTextCase = () => {
   quote.value = isUppercase.value
-    ? rawQuote.value
-    : Array.isArray(quote.value)
-    ? quote.value.map((letter: string) => letter.toLowerCase())
-    : (quote.value as string)
-        .split("")
-        .map((letter: string) => letter.toLowerCase());
-  console.log("change letter quote:", quote.value);
+    ? rawQuote.value.split("")
+    : rawQuote.value.toLowerCase().split("");
+  console.log("change letter quote:", quote.value, rawQuote.value);
   // reset all letter
   resetLetters();
 };
@@ -153,7 +149,6 @@ const handleGetNextQuote = async () => {
   loading.value = true;
 
   rawQuote.value = await getNextQuote(isUppercase.value);
-  console.log("raw quote :", rawQuote.value);
 
   changeTextCase();
 
