@@ -24,7 +24,6 @@ export const getNextQuote = async (isUppercase: boolean) => {
   try {
     const response = await fetch(fetchQuoteURL);
     const data = await response.json();
-    console.log("quote", data.quote);
     const letterID =
       (isUppercase ? data.quote[0] : data.quote[0].toLowerCase()) + 0;
 
