@@ -59,7 +59,7 @@
         v-else
       >
         <span
-          class="text-gray-400 flex"
+          class="text-gray-400 flex letter-span"
           v-for="(letter, index) in quote"
           :key="letter + index"
           :id="letter + index"
@@ -99,13 +99,19 @@ const changeTextCase = () => {
   quote.value = isUppercase.value
     ? rawQuote.value.split("")
     : rawQuote.value.toLowerCase().split("");
-  console.log("change letter quote:", quote.value, rawQuote.value);
-  // reset all letter
+
   resetLetters();
 };
 
 const resetLetters = () => {
   index.value = 0;
+
+  // reset classes on all letters
+  const allLetters = document.querySelectorAll(".letter-span");
+  allLetters.forEach((element) => {
+    element.classList.remove(...letterClasses.isBackspace.remove);
+    element.classList.add(...letterClasses.isBackspace.add);
+  });
 
   setInitialCursor(currentLetterID.value);
 };
