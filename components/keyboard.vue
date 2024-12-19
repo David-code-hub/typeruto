@@ -1,7 +1,14 @@
 <template>
   <div class="w-full" id="keyboard-root">
     <div>
-      <div class="flex justify-between mb-12 items-center">
+      <div class="flex items-center rounded-lg mb-7" v-if="isTyping">
+        <div class="mr-2 flex items-center">
+          <Icon name="simple-line-icons:clock" class="size-7" />
+        </div>
+        <span class="text-3xl rounded-lg font-bold"> {{ timerSeconds }}s </span>
+      </div>
+
+      <div class="flex justify-between mb-7 items-center duration-300" v-else>
         <div class="flex gap-3 items-center text-md">
           <div class="flex items-center gap-2">
             <Icon name="simple-line-icons:speedometer" class="size-5" />
@@ -17,17 +24,6 @@
             Mistakes:
             <span class="text-red-600 font-semibold"> {{ mistakes }}</span>
           </div>
-        </div>
-        <div class="flex gap-1 items-center rounded-lg pl-2 py-0">
-          <div class="mr-2 flex items-center gap-1">
-            <Icon name="simple-line-icons:clock" class="size-5" />Time
-          </div>
-          <button
-            class="p-1 rounded-lg hover:bg-gray-100 bg-gray-100 font-bold"
-          >
-            30s
-          </button>
-          <button class="p-1 rounded-lg hover:bg-gray-100">60s</button>
         </div>
         <div class="flex gap-3">
           <button
@@ -83,8 +79,21 @@ const rawQuote = ref(Array<string>());
 const loading = ref(true);
 const index = ref(0);
 const mistakes = ref(0);
-const isUppercase = ref(true);
+const isUppercase = ref(false);
 const currentLetterID = computed(() => quote.value[index.value] + index.value);
+const timerSeconds = ref(30);
+const isTyping = ref(false);
+let intervalID: number | any = null;
+
+const handleTimerCountdown = () => {
+  intervalID = setInterval(() => {
+    timerSeconds.value -= 1;
+    if (timerSeconds.value === 0) {
+      clearInterval(intervalID);
+      isTyping.value = false;
+    }
+  }, 1000);
+};
 
 const changeTextCase = () => {
   quote.value = isUppercase.value
@@ -94,7 +103,7 @@ const changeTextCase = () => {
     : (quote.value as string)
         .split("")
         .map((letter: string) => letter.toLowerCase());
-
+  console.log("change letter quote:", quote.value);
   // reset all letter
   resetLetters();
 };
@@ -119,6 +128,11 @@ const checkTyping = (event: KeyboardEvent) => {
     setInitialCursor(currentLetterID.value);
   } else if (splitQuoteByIndex === event.key) {
     // isCorrect
+    // start counter user starts typing
+    if (timerSeconds.value === 30) {
+      isTyping.value = true;
+      handleTimerCountdown();
+    }
     spanElement?.classList.remove(...letterClasses.isCorrect.remove);
     spanElement?.classList.add(...letterClasses.isCorrect.add);
     index.value += 1;
@@ -139,6 +153,7 @@ const handleGetNextQuote = async () => {
   loading.value = true;
 
   rawQuote.value = await getNextQuote(isUppercase.value);
+  console.log("raw quote :", rawQuote.value);
 
   changeTextCase();
 
