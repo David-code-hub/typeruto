@@ -1,42 +1,65 @@
 <template>
   <div class="w-full" id="keyboard-root">
     <div class="w-full">
+      <!--show count down-->
       <div
         class="flex items-center rounded-lg w-fit"
         :class="[
-          isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-2xl h-0',
+          isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
       >
-        <div class="mr-2 flex items-center">
+        <!-- <div class="mr-2 flex items-center">
           <Icon name="simple-line-icons:clock" class="size-7" />
-        </div>
+        </div> -->
         <span class="text-3xl rounded-lg font-bold"> {{ timerSeconds }}s </span>
       </div>
 
+      <!--show actions bar-->
       <div
         class="flex justify-between items-center w-full"
         :class="[
-          !isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-2xl h-0',
+          !isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
       >
-        <div class="flex gap-3 items-center text-md w-fit">
-          <div class="flex items-center gap-2">
-            <Icon name="simple-line-icons:speedometer" class="size-5" />
-            Speed:
+        <div class="flex gap-10 items-center text-md w-fit">
+          <div class="flex items-center gap-1">
+            <div class="mr-2 flex items-center">
+              <Icon name="simple-line-icons:speedometer" class="size-6" />
+            </div>
+            <span class="text-2xl rounded-lg font-bold">
+              {{ wordsPerMinute }}
 
-            <span class="text-black font-semibold"> 60wpm </span>
+              <span class="text-base text-gray-400 font-normal ml-1">WPM</span>
+            </span>
           </div>
-          <div>
-            Accuracy:
-            <span class="text-green-600 font-semibold"> 89%</span>
+          <div class="flex items-center">
+            <div class="mr-2 flex items-center">
+              <Icon name="simple-line-icons:pin" class="size-6" />
+            </div>
+            <span class="text-2xl rounded-lg font-bold">
+              0%
+              <span class="text-base text-gray-400 font-normal ml-1"
+                >Accuracy</span
+              >
+            </span>
           </div>
-          <div>
-            Mistakes:
-            <span class="text-red-600 font-semibold"> {{ mistakes }}</span>
+
+          <div class="flex items-center">
+            <div class="mr-2 flex items-center">
+              <Icon name="simple-line-icons:close" class="size-6" />
+            </div>
+
+            <span class="text-red-600 text-2xl font-semibold">
+              {{ mistakes }}
+
+              <span class="text-base text-gray-400 font-normal ml-1"
+                >Mistake{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
+              >
+            </span>
           </div>
         </div>
         <div class="flex gap-3">
-          <button
+          <!-- <button
             @click="
               isUppercase = !isUppercase;
               changeTextCase();
@@ -46,17 +69,19 @@
           >
             <span class="font-bold font-mono text-lg">A</span>
             Uppercase
-          </button>
+          </button> -->
 
           <button
             @click="handleGetNextQuote"
-            class="text-sm duration-300 hover:bg-gray-100 px-2 py-1 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 hover:opacity-80 border border-neutral-900 text-neutral-900 px-4 py-2 rounded-lg flex gap-1 items-center"
           >
-            <Icon name="simple-line-icons:reload" class="size-6" />
+            <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
           </button>
         </div>
       </div>
+
+      <!--show loader-->
       <div v-if="loading" class="w-full">
         <div class="text-center">
           <Icon name="svg-spinners:180-ring-with-bg" class="size-6" />
@@ -64,6 +89,7 @@
         </div>
       </div>
 
+      <!--show letters-->
       <div
         class="font-mono flex flex-row text-4xl break-words overflow-hidden flex-wrap"
         v-else
@@ -89,6 +115,7 @@ const rawQuote = ref("");
 const loading = ref(true);
 const index = ref(0);
 const mistakes = ref(0);
+const wordsPerMinute = ref(0);
 const isUppercase = ref(false);
 const currentLetterID = computed(() => quote.value[index.value] + index.value);
 const timerSeconds = ref(30);
@@ -100,6 +127,7 @@ const handleTimerCountdown = () => {
     timerSeconds.value -= 1;
     if (timerSeconds.value === 0) {
       clearInterval(intervalID);
+      timerSeconds.value = 30;
       isTyping.value = false;
     }
   }, 1000);
@@ -132,6 +160,11 @@ const checkTyping = (event: KeyboardEvent) => {
 
   if (event.code === "CapsLock") return;
 
+  if (quote.value[quote.value.length - 1] === event.key) {
+    handleGetNextQuote();
+    return;
+  }
+
   if (event.code === "Backspace") {
     index.value = index.value === 0 ? index.value : (index.value -= 1);
     const spanElement = document.getElementById(currentLetterID.value);
@@ -141,7 +174,7 @@ const checkTyping = (event: KeyboardEvent) => {
   } else if (splitQuoteByIndex === event.key) {
     // isCorrect
     // start counter user starts typing
-    if (timerSeconds.value === 30) {
+    if (timerSeconds.value === 30 && event.key === quote.value[0]) {
       isTyping.value = true;
       handleTimerCountdown();
     }
@@ -163,6 +196,7 @@ const handleGetNextQuote = async () => {
   index.value = 0;
   mistakes.value = 0;
   loading.value = true;
+  timerSeconds.value = 30;
 
   rawQuote.value = await getNextQuote(isUppercase.value);
 
