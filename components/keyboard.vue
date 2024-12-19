@@ -1,15 +1,25 @@
 <template>
   <div class="w-full" id="keyboard-root">
-    <div>
-      <div class="flex items-center rounded-lg mb-7" v-if="isTyping">
+    <div class="w-full">
+      <div
+        class="flex items-center rounded-lg w-fit"
+        :class="[
+          isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-2xl h-0',
+        ]"
+      >
         <div class="mr-2 flex items-center">
           <Icon name="simple-line-icons:clock" class="size-7" />
         </div>
         <span class="text-3xl rounded-lg font-bold"> {{ timerSeconds }}s </span>
       </div>
 
-      <div class="flex justify-between mb-7 items-center duration-300" v-else>
-        <div class="flex gap-3 items-center text-md">
+      <div
+        class="flex justify-between items-center w-full"
+        :class="[
+          !isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-2xl h-0',
+        ]"
+      >
+        <div class="flex gap-3 items-center text-md w-fit">
           <div class="flex items-center gap-2">
             <Icon name="simple-line-icons:speedometer" class="size-5" />
             Speed:

@@ -4,7 +4,7 @@
       <h1 class="font-bold text-3xl flex gap-2">
         <Icon name="simple-line-icons:speedometer" class="size-8" />
 
-        Typeru |
+        Typeru
       </h1>
 
       <a
