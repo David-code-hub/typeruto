@@ -23,6 +23,7 @@
     </div>
     <div class="max-w-screen-lg px-4 flex flex-col items-center mx-auto mt-20">
       <Keyboard />
+      <Attributions />
     </div>
   </div>
 </template>

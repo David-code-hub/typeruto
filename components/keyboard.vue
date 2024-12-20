@@ -55,7 +55,7 @@
               {{ mistakes }}
 
               <span class="text-base text-gray-400 font-normal ml-1"
-                >Mistake{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
+                >Oopsie{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
               >
             </span>
           </div>
@@ -76,7 +76,7 @@
           <button
             @click="handleGetNextQuote"
             :disabled="loading"
-            class="text-sm duration-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-green-400 border border-green-300 text-black px-4 py-2 rounded-lg flex gap-1 items-center"
+            class="text-xs duration-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-green-400 border border-green-300 text-black px-3 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
@@ -112,14 +112,15 @@
         </span>
       </div>
     </div>
-    <!--show powerlevel-->
-    <!-- <PowerLevel /> -->
   </div>
 </template>
 
 <script setup lang="ts">
 const quote = ref(Array<string>());
 const rawQuote = ref("");
+const wordsTyped = ref("");
+const wordCount = ref(0);
+const remainingTime = ref(0);
 const loading = ref(true);
 const index = ref(0);
 const mistakes = ref(0);
@@ -128,13 +129,28 @@ const isUppercase = ref(false);
 const currentLetterID = computed(() => quote.value[index.value] + index.value);
 const timerSeconds = ref(30);
 const isTyping = ref(false);
-let intervalID: number | any = null;
+const intervalID = ref<number | null | any>(null);
+
+const calculateWPM = () => {
+  const words = wordsTyped.value
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0);
+  wordCount.value = words.length;
+
+  const elapsedTime = 30 - remainingTime.value;
+  if (elapsedTime > 0) {
+    wordsPerMinute.value = Math.floor((60 / elapsedTime) * wordCount.value); //Math.floor((wordCount.value / elapsedTime) * 60 * 2);
+  }
+};
 
 const handleTimerCountdown = () => {
-  intervalID = setInterval(() => {
+  intervalID.value = setInterval(() => {
     timerSeconds.value -= 1;
     if (timerSeconds.value === 0) {
-      clearInterval(intervalID);
+      clearInterval(intervalID.value);
+
+      if (wordCount.value !== 0) calculateWPM();
       timerSeconds.value = 30;
       isTyping.value = false;
     }
@@ -169,6 +185,10 @@ const checkTyping = (event: KeyboardEvent) => {
   if (event.code === "CapsLock") return;
 
   if (quote.value[quote.value.length - 1] === event.key) {
+    remainingTime.value = timerSeconds.value;
+    isTyping.value = false;
+    clearInterval(intervalID.value);
+    calculateWPM();
     handleGetNextQuote();
     return;
   }
@@ -188,30 +208,32 @@ const checkTyping = (event: KeyboardEvent) => {
       index.value === 0
     ) {
       isTyping.value = true;
+      mistakes.value = 0;
+      wordsTyped.value = "";
+      wordCount.value = 0;
       handleTimerCountdown();
     }
     spanElement?.classList.remove(...letterClasses.isCorrect.remove);
     spanElement?.classList.add(...letterClasses.isCorrect.add);
     index.value += 1;
+    wordsTyped.value += event.key;
     setInitialCursor(currentLetterID.value);
   } else {
     // isInCorrect
     spanElement?.classList.remove(...letterClasses.isInCorrect.remove);
     spanElement?.classList.add(...letterClasses.isInCorrect.add);
     mistakes.value += 1;
-    index.value += 1;
+    // index.value += 1;
     setInitialCursor(currentLetterID.value);
   }
 };
 
 const handleGetNextQuote = async () => {
   index.value = 0;
-  mistakes.value = 0;
   loading.value = true;
   timerSeconds.value = 30;
 
   rawQuote.value = await getNextQuote(isUppercase.value);
-
   changeTextCase();
 
   loading.value = false;
