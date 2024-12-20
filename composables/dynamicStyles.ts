@@ -1,6 +1,6 @@
 export const letterClasses = {
   isCorrect: {
-    add: ["text-black"],
+    add: ["text-white"],
     remove: ["text-red-700", "text-gray-400"],
   },
 

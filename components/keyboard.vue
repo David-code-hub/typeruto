@@ -11,7 +11,9 @@
         <!-- <div class="mr-2 flex items-center">
           <Icon name="simple-line-icons:clock" class="size-7" />
         </div> -->
-        <span class="text-3xl rounded-lg font-bold"> {{ timerSeconds }}s </span>
+        <span class="text-3xl rounded-lg font-bold text-green-300">
+          {{ timerSeconds }}s
+        </span>
       </div>
 
       <!--show actions bar-->
@@ -22,7 +24,7 @@
         ]"
       >
         <div class="flex gap-10 items-center text-md w-fit">
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:speedometer" class="size-6" />
             </div>
@@ -32,7 +34,7 @@
               <span class="text-base text-gray-400 font-normal ml-1">WPM</span>
             </span>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:pin" class="size-6" />
             </div>
@@ -44,7 +46,7 @@
             </span>
           </div>
 
-          <div class="flex items-center">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:close" class="size-6" />
             </div>
@@ -73,7 +75,8 @@
 
           <button
             @click="handleGetNextQuote"
-            class="text-sm duration-300 hover:opacity-80 border border-neutral-900 text-neutral-900 px-4 py-2 rounded-lg flex gap-1 items-center"
+            :disabled="loading"
+            class="text-sm duration-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-green-400 border border-green-300 text-black px-4 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
@@ -83,8 +86,11 @@
 
       <!--show loader-->
       <div v-if="loading" class="w-full">
-        <div class="text-center">
-          <Icon name="svg-spinners:180-ring-with-bg" class="size-6" />
+        <div class="text-center text-gray-400">
+          <Icon
+            name="svg-spinners:180-ring-with-bg"
+            class="size-6 text-green-300"
+          />
           <p>Fetching quote...</p>
         </div>
       </div>
@@ -106,6 +112,8 @@
         </span>
       </div>
     </div>
+    <!--show powerlevel-->
+    <!-- <PowerLevel /> -->
   </div>
 </template>
 
@@ -174,7 +182,11 @@ const checkTyping = (event: KeyboardEvent) => {
   } else if (splitQuoteByIndex === event.key) {
     // isCorrect
     // start counter user starts typing
-    if (timerSeconds.value === 30 && event.key === quote.value[0]) {
+    if (
+      timerSeconds.value === 30 &&
+      event.key === quote.value[0] &&
+      index.value === 0
+    ) {
       isTyping.value = true;
       handleTimerCountdown();
     }
