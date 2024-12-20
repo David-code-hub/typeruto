@@ -6,7 +6,7 @@ export const createCursorElement = () => {
   cursor.setAttribute("id", "typing-cursor");
   cursor.setAttribute(
     "class",
-    "rounded-full w-[4px] bg-black h-9 animate-flicker"
+    "rounded-full w-[4px] bg-green-300 h-9 animate-flicker"
   );
 };
 

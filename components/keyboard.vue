@@ -11,7 +11,9 @@
         <!-- <div class="mr-2 flex items-center">
           <Icon name="simple-line-icons:clock" class="size-7" />
         </div> -->
-        <span class="text-3xl rounded-lg font-bold"> {{ timerSeconds }}s </span>
+        <span class="text-3xl rounded-lg font-bold text-green-300">
+          {{ timerSeconds }}s
+        </span>
       </div>
 
       <!--show actions bar-->
@@ -22,7 +24,7 @@
         ]"
       >
         <div class="flex gap-10 items-center text-md w-fit">
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:speedometer" class="size-6" />
             </div>
@@ -32,7 +34,7 @@
               <span class="text-base text-gray-400 font-normal ml-1">WPM</span>
             </span>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:pin" class="size-6" />
             </div>
@@ -44,7 +46,7 @@
             </span>
           </div>
 
-          <div class="flex items-center">
+          <div class="flex items-center gap-1 text-gray-300">
             <div class="mr-2 flex items-center">
               <Icon name="simple-line-icons:close" class="size-6" />
             </div>
@@ -53,7 +55,7 @@
               {{ mistakes }}
 
               <span class="text-base text-gray-400 font-normal ml-1"
-                >Mistake{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
+                >Oopsie{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
               >
             </span>
           </div>
@@ -73,7 +75,8 @@
 
           <button
             @click="handleGetNextQuote"
-            class="text-sm duration-300 hover:opacity-80 border border-neutral-900 text-neutral-900 px-4 py-2 rounded-lg flex gap-1 items-center"
+            :disabled="loading"
+            class="text-xs duration-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-green-400 border border-green-300 text-black px-3 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
@@ -83,8 +86,11 @@
 
       <!--show loader-->
       <div v-if="loading" class="w-full">
-        <div class="text-center">
-          <Icon name="svg-spinners:180-ring-with-bg" class="size-6" />
+        <div class="text-center text-gray-400">
+          <Icon
+            name="svg-spinners:180-ring-with-bg"
+            class="size-6 text-green-300"
+          />
           <p>Fetching quote...</p>
         </div>
       </div>
@@ -112,6 +118,9 @@
 <script setup lang="ts">
 const quote = ref(Array<string>());
 const rawQuote = ref("");
+const wordsTyped = ref("");
+const wordCount = ref(0);
+const remainingTime = ref(0);
 const loading = ref(true);
 const index = ref(0);
 const mistakes = ref(0);
@@ -120,13 +129,28 @@ const isUppercase = ref(false);
 const currentLetterID = computed(() => quote.value[index.value] + index.value);
 const timerSeconds = ref(30);
 const isTyping = ref(false);
-let intervalID: number | any = null;
+const intervalID = ref<number | null | any>(null);
+
+const calculateWPM = () => {
+  const words = wordsTyped.value
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0);
+  wordCount.value = words.length;
+
+  const elapsedTime = 30 - remainingTime.value;
+  if (elapsedTime > 0) {
+    wordsPerMinute.value = Math.floor((60 / elapsedTime) * wordCount.value); //Math.floor((wordCount.value / elapsedTime) * 60 * 2);
+  }
+};
 
 const handleTimerCountdown = () => {
-  intervalID = setInterval(() => {
+  intervalID.value = setInterval(() => {
     timerSeconds.value -= 1;
     if (timerSeconds.value === 0) {
-      clearInterval(intervalID);
+      clearInterval(intervalID.value);
+
+      if (wordCount.value !== 0) calculateWPM();
       timerSeconds.value = 30;
       isTyping.value = false;
     }
@@ -161,6 +185,10 @@ const checkTyping = (event: KeyboardEvent) => {
   if (event.code === "CapsLock") return;
 
   if (quote.value[quote.value.length - 1] === event.key) {
+    remainingTime.value = timerSeconds.value;
+    isTyping.value = false;
+    clearInterval(intervalID.value);
+    calculateWPM();
     handleGetNextQuote();
     return;
   }
@@ -174,32 +202,38 @@ const checkTyping = (event: KeyboardEvent) => {
   } else if (splitQuoteByIndex === event.key) {
     // isCorrect
     // start counter user starts typing
-    if (timerSeconds.value === 30 && event.key === quote.value[0]) {
+    if (
+      timerSeconds.value === 30 &&
+      event.key === quote.value[0] &&
+      index.value === 0
+    ) {
       isTyping.value = true;
+      mistakes.value = 0;
+      wordsTyped.value = "";
+      wordCount.value = 0;
       handleTimerCountdown();
     }
     spanElement?.classList.remove(...letterClasses.isCorrect.remove);
     spanElement?.classList.add(...letterClasses.isCorrect.add);
     index.value += 1;
+    wordsTyped.value += event.key;
     setInitialCursor(currentLetterID.value);
   } else {
     // isInCorrect
     spanElement?.classList.remove(...letterClasses.isInCorrect.remove);
     spanElement?.classList.add(...letterClasses.isInCorrect.add);
     mistakes.value += 1;
-    index.value += 1;
+    // index.value += 1;
     setInitialCursor(currentLetterID.value);
   }
 };
 
 const handleGetNextQuote = async () => {
   index.value = 0;
-  mistakes.value = 0;
   loading.value = true;
   timerSeconds.value = 30;
 
   rawQuote.value = await getNextQuote(isUppercase.value);
-
   changeTextCase();
 
   loading.value = false;
