@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-900 h-screen">
+  <div class="bg-neutral-900 h-screen relative overflow-hidden">
     <div class="bg-green-300 w-20 h-20 blur-[6em] absolute"></div>
 
     <a
