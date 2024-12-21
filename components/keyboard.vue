@@ -8,14 +8,10 @@
           isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
       >
-        <!-- <div class="mr-2 flex items-center">
-          <Icon name="simple-line-icons:clock" class="size-7" />
-        </div> -->
         <span class="text-3xl rounded-lg font-bold text-green-300">
           {{ timerSeconds }}s
         </span>
       </div>
-
       <!--show actions bar-->
       <div
         class="flex justify-between items-center w-full"
@@ -25,40 +21,33 @@
       >
         <div class="flex gap-10 items-center text-md w-fit">
           <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-1 flex items-center">
+            <!-- <div class="mr-1 flex items-center">
               <Icon name="simple-line-icons:speedometer" class="size-6" />
-            </div>
+            </div> -->
             <span class="text-2xl rounded-lg font-bold">
               {{ wordsPerMinute }}
 
               <span class="text-base text-gray-400 font-normal ml-1">WPM</span>
             </span>
           </div>
-          <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-1 flex items-center">
-              <Icon name="uil:bullseye" class="size-6" />
-            </div>
-            <span class="text-2xl rounded-lg font-bold">
+
+          <!-- <div class="flex items-center gap-1 text-gray-300">
+            <span class="text-xl font-semibold">
               0%
               <span class="text-base text-gray-400 font-normal ml-1"
                 >Accuracy</span
               >
             </span>
-          </div>
+          </div> -->
 
-          <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-1 flex items-center">
-              <Icon name="simple-line-icons:close" class="size-6" />
-            </div>
-
-            <span class="text-2xl font-semibold">
-              {{ mistakes }}
+          <!-- <div class="flex items-center gap-1 text-gray-300">
+            <span class="text-xl font-semibold"> {{ mistakes }}
 
               <span class="text-base text-gray-400 font-normal ml-1"
-                >Oopsie{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
+                >Mistake{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
               >
             </span>
-          </div>
+          </div> -->
         </div>
         <div class="flex gap-3">
           <!-- <button
@@ -76,7 +65,7 @@
           <button
             @click="handleGetNextQuote"
             :disabled="loading"
-            class="text-sm duration-300 focused:border-red-900 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 border border-gray-200 text-gray-200 px-3 py-2 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 focus:ring-2 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 border border-gray-200 text-gray-200 px-3 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
@@ -140,7 +129,7 @@ const calculateWPM = () => {
 
   const elapsedTime = 30 - remainingTime.value;
   if (elapsedTime > 0) {
-    wordsPerMinute.value = Math.floor((60 / elapsedTime) * wordCount.value); //Math.floor((wordCount.value / elapsedTime) * 60 * 2);
+    wordsPerMinute.value = Math.floor((60 / elapsedTime) * wordCount.value);
   }
 };
 
@@ -184,7 +173,10 @@ const checkTyping = (event: KeyboardEvent) => {
 
   if (event.code === "CapsLock") return;
 
-  if (quote.value[quote.value.length - 1] === event.key) {
+  if (
+    quote.value[quote.value.length - 1] === event.key &&
+    index.value === quote.value.length - 1
+  ) {
     remainingTime.value = timerSeconds.value;
     isTyping.value = false;
     clearInterval(intervalID.value);
