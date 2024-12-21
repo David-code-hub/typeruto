@@ -1,15 +1,15 @@
 <template>
   <div class="absolute bottom-20">
     <div class="text-gray-400 flex items-center gap-2 text-sm">
-      This project is inspired by
-      <a href="https://monkeytype.com/" target="_blank" class="text-green-300"
-        >MonkeyType</a
+      Made with ❤️ by
+
+      <a
+        href="https://github.com/David-code-hub"
+        target="_blank"
+        class="text-green-300"
       >
-      &
-      <a href="https://www.keybr.com/" target="_blank" class="text-green-300"
-        >Keybr</a
-      >
-      <Icon name="simple-line-icons:heart" class="size-5 bg-green-300" />
+        baby obito
+      </a>
     </div>
   </div>
 </template>
