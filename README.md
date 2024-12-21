@@ -1,6 +1,6 @@
 # Welcome to Typeru!
 
-A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**. This app helps users measure their typing speed (Words Per Minute) within a defined time frame while offering a clean and visually appealing interface.
+A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
 
 [Live Demo ➡️](https://typeru.netlify.app/)
 
@@ -8,10 +8,9 @@ A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**,
 
 ## Features
 
-- 🕒 **30-Second Timer**: Test your typing speed with a built-in countdown timer.
-- 📝 **Words Per Minute (WPM) Calculation**: Real-time and accurate WPM calculation.
-- 🛠️ **Built with Nuxt.js and Tailwind CSS**: Leverages modern technologies for fast, efficient, and beautiful development.
-- 📦 **Nuxt Icons Integration**: For easy and scalable iconography.
+- 🕒 **30-Second Timer**
+- 📝 **Words Per Minute (WPM) Calculation**
+- 🛠️ **Built with Nuxt.js and Tailwind CSS**
 
 ---
 
