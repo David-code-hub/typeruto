@@ -25,7 +25,7 @@
       >
         <div class="flex gap-10 items-center text-md w-fit">
           <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-2 flex items-center">
+            <div class="mr-1 flex items-center">
               <Icon name="simple-line-icons:speedometer" class="size-6" />
             </div>
             <span class="text-2xl rounded-lg font-bold">
@@ -35,8 +35,8 @@
             </span>
           </div>
           <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-2 flex items-center">
-              <Icon name="simple-line-icons:pin" class="size-6" />
+            <div class="mr-1 flex items-center">
+              <Icon name="uil:bullseye" class="size-6" />
             </div>
             <span class="text-2xl rounded-lg font-bold">
               0%
@@ -47,11 +47,11 @@
           </div>
 
           <div class="flex items-center gap-1 text-gray-300">
-            <div class="mr-2 flex items-center">
+            <div class="mr-1 flex items-center">
               <Icon name="simple-line-icons:close" class="size-6" />
             </div>
 
-            <span class="text-red-600 text-2xl font-semibold">
+            <span class="text-2xl font-semibold">
               {{ mistakes }}
 
               <span class="text-base text-gray-400 font-normal ml-1"
@@ -76,7 +76,7 @@
           <button
             @click="handleGetNextQuote"
             :disabled="loading"
-            class="text-xs duration-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-green-400 border border-green-300 text-black px-3 py-2 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 focused:border-red-900 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 border border-gray-200 text-gray-200 px-3 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
