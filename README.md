@@ -1,5 +1,7 @@
 # Welcome to Typeru!
 
+![Screenshot 1](https://github.com/user-attachments/assets/cdafe460-e88b-4998-a2f9-b20c7a6d9808)
+
 A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
 
 [Live Demo ➡️](https://typeru.netlify.app/)
@@ -11,12 +13,6 @@ A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**,
 - 🕒 **30-Second Timer**
 - 📝 **Words Per Minute (WPM) Calculation**
 - 🛠️ **Built with Nuxt.js and Tailwind CSS**
-
----
-
-## Screenshots
-
-![ype Speed Test Screenshot 2](https://github.com/user-attachments/assets/0d4bee7a-b582-4c38-bf21-ce723f785e29)
 
 ---
 
