@@ -1,6 +1,7 @@
 # Welcome to Typeru!
 
-![Screenshot 1](https://github.com/user-attachments/assets/cdafe460-e88b-4998-a2f9-b20c7a6d9808)
+![Screenshot 1](https://github.com/user-attachments/assets/5c9f999b-3f1f-46ce-90ae-a163c4f3488a)
+
 
 A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
 
