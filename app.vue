@@ -19,13 +19,11 @@
           Typeru
         </h1>
 
-        <!-- <a
-          href="https://github.com/David-code-hub/type_speed_test"
-          target="_blank"
-          class="text-sm duration-300 hover:bg-neutral-900 p-2 rounded-full flex gap-1 items-center text-gray-200"
+        <button
+          class="text-sm duration-300 hover:bg-neutral-800 p-2 rounded-full flex gap-1 items-center text-gray-200"
         >
-          <Icon name="simple-icons:github" class="size-6" />
-        </a> -->
+          <Icon name="uil:sun" class="size-8" />
+        </button>
       </div>
     </div>
     <div class="max-w-screen-lg px-4 flex flex-col items-center mx-auto mt-16">

@@ -3,7 +3,7 @@
     <div class="w-full">
       <!--show count down-->
       <div
-        class="flex items-center rounded-lg w-fit"
+        class="flex items-center justify-between rounded-lg w-full"
         :class="[
           isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
@@ -11,6 +11,19 @@
         <span class="text-3xl rounded-lg font-bold text-green-300">
           {{ timerSeconds }}s
         </span>
+
+        <div
+          class="flex bg-slate-800 border border-slate-700 gap-2 rounded-lg items-center py-2 px-3"
+        >
+          <Icon
+            :name="`simple-line-icons:lock-${isCapsLock ? 'close' : 'open'}`"
+            :class="[isCapsLock ? ' bg-green-300' : 'bg-gray-200']"
+          />
+          <div class="text-gray-400 text-sm">
+            Caps
+            <span class="capitalize">{{ isCapsLock ? "on" : "off" }} </span>
+          </div>
+        </div>
       </div>
       <!--show actions bar-->
       <div
@@ -19,15 +32,14 @@
           !isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
       >
-        <div class="flex gap-10 items-center text-md w-fit">
+        <div class="flex gap-5 items-center text-md w-fit">
           <div class="flex items-center gap-1 text-gray-300">
             <!-- <div class="mr-1 flex items-center">
               <Icon name="simple-line-icons:speedometer" class="size-6" />
             </div> -->
-            <span class="text-2xl rounded-lg font-bold">
+            <span class="text-xl rounded-lg font-bold">
               {{ wordsPerMinute }}
-
-              <span class="text-base text-gray-400 font-normal ml-1">WPM</span>
+              <span class="text-base text-gray-400 font-normal ml-1">Wpm</span>
             </span>
           </div>
 
@@ -40,45 +52,33 @@
             </span>
           </div> -->
 
-          <!-- <div class="flex items-center gap-1 text-gray-300">
-            <span class="text-xl font-semibold"> {{ mistakes }}
+          <div class="flex items-center gap-1 text-gray-300">
+            <span class="text-xl font-semibold">
+              {{ mistakes }}
 
               <span class="text-base text-gray-400 font-normal ml-1"
-                >Mistake{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
+                >Typo{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
               >
             </span>
-          </div> -->
+          </div>
         </div>
         <div class="flex gap-3">
-          <!-- <button
+          <button
             @click="
               isUppercase = !isUppercase;
               changeTextCase();
             "
-            class="text-sm duration-300 px-2 py-1 rounded-lg flex gap-1 items-center"
-            :class="{ 'font-bold bg-gray-100': isUppercase }"
+            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
+            :class="{ 'text-green-300': isUppercase }"
           >
-            <span class="font-bold font-mono text-lg">A</span>
+            <Icon name="uil:font" class="size-4" />
             Uppercase
-          </button> -->
-
-          <div
-            class="flex bg-slate-800 gap-2 rounded-lg items-center py-2 px-3"
-          >
-            <div
-              class="h-2 w-2 rounded-full"
-              :class="[isCapsLock ? 'bg-green-300' : 'bg-gray-200']"
-            ></div>
-            <div class="text-gray-400 text-sm">
-              Caps
-              <span class="capitalize">{{ isCapsLock ? "on" : "off" }} </span>
-            </div>
-          </div>
+          </button>
 
           <button
             @click="handleGetNextQuote"
             :disabled="loading"
-            class="text-sm duration-300 focus:ring-2 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 border border-gray-200 text-gray-200 px-3 py-2 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
           >
             <Icon name="simple-line-icons:reload" class="size-4" />
             Reload
@@ -181,10 +181,16 @@ const resetLetters = () => {
   setInitialCursor(currentLetterID.value);
 };
 
+const checkIsCapsLock = (event: KeyboardEvent) => {
+  if (event.code === "CapsLock") {
+    isCapsLock.value = event.getModifierState("CapsLock");
+    return;
+  }
+};
+
 const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
-  console.log("event ", event);
   if (event.code === "CapsLock") {
     isCapsLock.value = event.getModifierState("CapsLock");
     return;
@@ -238,25 +244,28 @@ const checkTyping = (event: KeyboardEvent) => {
 };
 
 const handleGetNextQuote = async () => {
-  index.value = 0;
-  loading.value = true;
-  timerSeconds.value = 30;
-
-  rawQuote.value = await getNextQuote(isUppercase.value);
-  changeTextCase();
-
-  loading.value = false;
+  try {
+    index.value = 0;
+    loading.value = true;
+    timerSeconds.value = 30;
+    rawQuote.value = await getNextQuote(isUppercase.value);
+    changeTextCase();
+  } catch (error) {
+    console.error("Error while fetching next quote :", error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 onMounted(() => {
   window.addEventListener("keydown", checkTyping);
-  window.addEventListener("keyup", checkTyping);
+  window.addEventListener("keyup", checkIsCapsLock);
   createCursorElement();
   handleGetNextQuote();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", checkTyping);
-  window.removeEventListener("keyup", checkTyping);
+  window.removeEventListener("keyup", checkIsCapsLock);
 });
 </script>

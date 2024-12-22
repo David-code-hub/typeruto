@@ -1,6 +1,6 @@
 <template>
   <div class="absolute bottom-20">
-    <div class="text-gray-400 flex items-center gap-2 text-sm">
+    <div class="text-gray-400 flex items-center gap-1 text-sm">
       Made with ❤️ by
 
       <a
@@ -8,7 +8,7 @@
         target="_blank"
         class="text-green-300"
       >
-        baby obito
+        Obito
       </a>
     </div>
   </div>
