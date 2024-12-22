@@ -154,6 +154,7 @@ const handleTimerCountdown = () => {
       clearInterval(intervalID.value);
 
       if (wordCount.value !== 0) calculateWPM();
+      handleGetNextQuote();
       timerSeconds.value = 30;
       isTyping.value = false;
     }
