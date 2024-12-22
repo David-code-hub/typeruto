@@ -16,7 +16,7 @@
           class="flex bg-slate-800 border border-slate-700 gap-2 rounded-lg items-center py-2 px-3"
         >
           <Icon
-            :name="`simple-line-icons:lock-${isCapsLock ? 'close' : 'open'}`"
+            :name="`simple-line-icons:lock${isCapsLock ? '' : '-open'}`"
             :class="[isCapsLock ? ' bg-green-300' : 'bg-gray-200']"
           />
           <div class="text-gray-400 text-sm">
@@ -34,9 +34,6 @@
       >
         <div class="flex gap-5 items-center text-md w-fit">
           <div class="flex items-center gap-1 text-gray-300">
-            <!-- <div class="mr-1 flex items-center">
-              <Icon name="simple-line-icons:speedometer" class="size-6" />
-            </div> -->
             <span class="text-xl rounded-lg font-bold">
               {{ wordsPerMinute }}
               <span class="text-base text-gray-400 font-normal ml-1">Wpm</span>
