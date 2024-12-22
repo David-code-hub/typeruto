@@ -62,6 +62,19 @@
             Uppercase
           </button> -->
 
+          <div
+            class="flex bg-slate-800 gap-2 rounded-lg items-center py-2 px-3"
+          >
+            <div
+              class="h-2 w-2 rounded-full"
+              :class="[isCapsLock ? 'bg-green-300' : 'bg-gray-200']"
+            ></div>
+            <div class="text-gray-400 text-sm">
+              Caps
+              <span class="capitalize">{{ isCapsLock ? "on" : "off" }} </span>
+            </div>
+          </div>
+
           <button
             @click="handleGetNextQuote"
             :disabled="loading"
@@ -119,6 +132,7 @@ const currentLetterID = computed(() => quote.value[index.value] + index.value);
 const timerSeconds = ref(30);
 const isTyping = ref(false);
 const intervalID = ref<number | null | any>(null);
+const isCapsLock = ref(false);
 
 const calculateWPM = () => {
   const words = wordsTyped.value
@@ -170,8 +184,11 @@ const resetLetters = () => {
 const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
-
-  if (event.code === "CapsLock") return;
+  console.log("event ", event);
+  if (event.code === "CapsLock") {
+    isCapsLock.value = event.getModifierState("CapsLock");
+    return;
+  }
 
   if (
     quote.value[quote.value.length - 1] === event.key &&
@@ -233,11 +250,13 @@ const handleGetNextQuote = async () => {
 
 onMounted(() => {
   window.addEventListener("keydown", checkTyping);
+  window.addEventListener("keyup", checkTyping);
   createCursorElement();
   handleGetNextQuote();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", checkTyping);
+  window.removeEventListener("keyup", checkTyping);
 });
 </script>
