@@ -6,7 +6,7 @@
         <h1
           class="text-4xl font-bold bg-gradient-to-r from-green-300 to-green-800 bg-clip-text text-transparent"
         >
-          Typeru
+          Typeruto
         </h1>
 
         <button
