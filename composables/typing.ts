@@ -1,4 +1,18 @@
 const fetchQuoteURL = "https://dummyjson.com/quotes/random";
+
+export const invalidKeys = [
+  "Shift",
+  "Control",
+  "Alt",
+  "Meta",
+  "Tab",
+  "Escape",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+];
+
 let cursor: HTMLElement;
 
 export const createCursorElement = () => {

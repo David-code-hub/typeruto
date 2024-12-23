@@ -189,6 +189,9 @@ const checkIsCapsLock = (event: KeyboardEvent) => {
 const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
+
+  if (invalidKeys.includes(event.key)) return;
+
   if (event.code === "CapsLock") {
     isCapsLock.value = event.getModifierState("CapsLock");
     return;
