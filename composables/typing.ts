@@ -18,7 +18,7 @@ export const createCursorElement = () => {
   cursor.setAttribute("id", "typing-cursor");
   cursor.setAttribute(
     "class",
-    "rounded-full w-[4px] bg-green-300 h-9 animate-flicker"
+    "rounded-full w-[4px] bg-orange-400 h-9 animate-flicker"
   );
 };
 
@@ -30,19 +30,4 @@ export const setInitialCursor = (currentLetterID: string) => {
       letter.insertBefore(cursor, letter.firstChild);
     } else console.error("Letter element not found :", letter);
   }, 100);
-};
-
-export const getNextQuote = async (isUppercase: boolean) => {
-  try {
-    const data = narutoQuotes[Math.floor(Math.random() * 50)];
-    // const letterID =
-    //   (isUppercase
-    //     ? data.quote[0]
-    //     : data.quote[0].toLowerCase()) + 0;
-
-    // setInitialCursor(letterID);
-    return data.quote;
-  } catch (error) {
-    console.error("Error while fetching quote :", error);
-  }
 };

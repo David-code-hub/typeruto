@@ -8,7 +8,7 @@
           isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
         ]"
       >
-        <span class="text-3xl rounded-lg font-bold text-green-300">
+        <span class="text-3xl rounded-lg font-bold text-orange-400">
           {{ timerSeconds }}s
         </span>
 
@@ -17,7 +17,7 @@
         >
           <Icon
             :name="`simple-line-icons:lock${isCapsLock ? '' : '-open'}`"
-            :class="[isCapsLock ? ' bg-green-300' : 'bg-gray-200']"
+            :class="[isCapsLock ? ' bg-orange-400' : 'bg-gray-200']"
           />
           <div class="text-gray-400 text-sm">
             Caps
@@ -65,20 +65,11 @@
               isUppercase = !isUppercase;
               changeTextCase();
             "
-            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
-            :class="{ 'text-green-300': isUppercase }"
+            class="text-sm duration-300 focus:outline-none focus:ring-0 focus:ring-orange-400 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
+            :class="{ 'text-orange-400': isUppercase }"
           >
             <Icon name="uil:font" class="size-4" />
             Uppercase
-          </button>
-
-          <button
-            @click="handleGetNextQuote"
-            :disabled="loading"
-            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
-          >
-            <Icon name="simple-line-icons:reload" class="size-4" />
-            Reload
           </button>
         </div>
       </div>
@@ -88,7 +79,7 @@
         <div class="text-center text-gray-400">
           <Icon
             name="svg-spinners:180-ring-with-bg"
-            class="size-6 text-green-300"
+            class="size-6 text-orange-400"
           />
           <p>Fetching quote...</p>
         </div>
@@ -109,14 +100,43 @@
             {{ letter === " " ? "_" : letter }}
           </span>
         </span>
+        <!--show character details-->
+        <div class="w-full flex mt-10 text-white gap-2 justify-end">
+          <img
+            :src="`/_nuxt/assets/images/characters/${characterImage}.jpg`"
+            class="h-9 w-9 rounded-full object-cover border border-white"
+            :alt="`${rawQuote?.character} avatar`"
+          />
+          <div class="text-gray-300 font-normal text-sm">
+            <p class="text-gray-400 font-normal text-xs">Said By</p>
+            {{ rawQuote?.character }}
+          </div>
+        </div>
       </div>
     </div>
+    <p
+      class="text-gray-400 text-md mt-12 flex items-center gap-2 justify-center"
+    >
+      Press
+      <span
+        class="border border-gray-400 bg-slate-800 rounded-lg px-2 py-1 text-sm font-mono w-fit flex items-center"
+      >
+        Enter
+      </span>
+      to reload.
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-const quote = ref(Array<string>());
-const rawQuote = ref("");
+interface narutoQuote {
+  quote: string;
+  character: string;
+}
+
+const quote = ref<Array<string>>(["n"]);
+const rawQuote = ref<narutoQuote>();
+const characterImage = ref("");
 const wordsTyped = ref("");
 const wordCount = ref(0);
 const remainingTime = ref(0);
@@ -159,9 +179,11 @@ const handleTimerCountdown = () => {
 };
 
 const changeTextCase = () => {
+  const quoteOnly = rawQuote!.value!.quote;
+
   quote.value = isUppercase.value
-    ? rawQuote.value.split("")
-    : rawQuote.value.toLowerCase().split("");
+    ? quoteOnly.split("")
+    : quoteOnly.toLowerCase().split("");
 
   resetLetters();
 };
@@ -189,6 +211,11 @@ const checkIsCapsLock = (event: KeyboardEvent) => {
 const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
+
+  if (event.key === "Enter") {
+    handleGetNextQuote();
+    return;
+  }
 
   if (invalidKeys.includes(event.key)) return;
 
@@ -244,12 +271,17 @@ const checkTyping = (event: KeyboardEvent) => {
   }
 };
 
-const handleGetNextQuote = async () => {
+const handleGetNextQuote = () => {
   try {
     index.value = 0;
     loading.value = true;
     timerSeconds.value = 30;
-    rawQuote.value = await getNextQuote(isUppercase.value);
+    rawQuote.value = narutoQuotes[Math.floor(Math.random() * 50)];
+
+    characterImage.value =
+      rawQuote?.value?.character!.split(" ").length > 1
+        ? rawQuote?.value?.character.split(" ")[0].toLowerCase()
+        : rawQuote?.value?.character?.toLowerCase();
     changeTextCase();
   } catch (error) {
     console.error("Error while fetching next quote :", error);
