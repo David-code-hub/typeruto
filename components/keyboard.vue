@@ -65,20 +65,11 @@
               isUppercase = !isUppercase;
               changeTextCase();
             "
-            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
+            class="text-sm duration-300 focus:outline-none focus:ring-0 focus:ring-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
             :class="{ 'text-green-300': isUppercase }"
           >
             <Icon name="uil:font" class="size-4" />
             Uppercase
-          </button>
-
-          <button
-            @click="handleGetNextQuote"
-            :disabled="loading"
-            class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-green-300 active:bg-green-300 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
-          >
-            <Icon name="simple-line-icons:reload" class="size-4" />
-            Reload
           </button>
         </div>
       </div>
@@ -111,6 +102,17 @@
         </span>
       </div>
     </div>
+    <p
+      class="text-gray-400 text-md mt-12 flex items-center gap-2 justify-center"
+    >
+      Press
+      <span
+        class="border border-gray-400 bg-slate-800 rounded-lg px-2 py-1 text-sm font-mono w-fit flex items-center"
+      >
+        Enter
+      </span>
+      to reload.
+    </p>
   </div>
 </template>
 
@@ -189,6 +191,11 @@ const checkIsCapsLock = (event: KeyboardEvent) => {
 const checkTyping = (event: KeyboardEvent) => {
   const splitQuoteByIndex = quote.value[index.value];
   const spanElement = document.getElementById(currentLetterID.value);
+
+  if (event.key === "Enter") {
+    handleGetNextQuote();
+    return;
+  }
 
   if (invalidKeys.includes(event.key)) return;
 

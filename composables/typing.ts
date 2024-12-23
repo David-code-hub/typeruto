@@ -35,12 +35,6 @@ export const setInitialCursor = (currentLetterID: string) => {
 export const getNextQuote = async (isUppercase: boolean) => {
   try {
     const data = narutoQuotes[Math.floor(Math.random() * 50)];
-    // const letterID =
-    //   (isUppercase
-    //     ? data.quote[0]
-    //     : data.quote[0].toLowerCase()) + 0;
-
-    // setInitialCursor(letterID);
     return data.quote;
   } catch (error) {
     console.error("Error while fetching quote :", error);
