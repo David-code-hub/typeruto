@@ -1,6 +1,6 @@
 export const narutoQuotes = [
   {
-    quote: "Hard work is worthless for those that don’t believe in themselves.",
+    quote: "Hard work is worthless for those that don't believe in themselves.",
     character: "Naruto Uzumaki",
   },
   {
@@ -14,12 +14,12 @@ export const narutoQuotes = [
     character: "Haku",
   },
   {
-    quote: "The pain of being alone is completely out of this world, isn’t it?",
+    quote: "The pain of being alone is completely out of this world, isn't it?",
     character: "Naruto Uzumaki",
   },
   {
     quote:
-      "People's lives don’t end when they die; they end when they give up.",
+      "People's lives don't end when they die; they end when they give up.",
     character: "Naruto Uzumaki",
   },
   {
@@ -34,16 +34,16 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "If you don’t like your destiny, don’t accept it. Have the courage to change it.",
+      "If you don't like your destiny, don't accept it. Have the courage to change it.",
     character: "Naruto Uzumaki",
   },
   {
-    quote: "While I walk, I’ll always be running toward my true goal in life.",
+    quote: "While I walk, I'll always be running toward my true goal in life.",
     character: "Naruto Uzumaki",
   },
   {
     quote:
-      "I care more about others than myself, and I won’t let anyone hurt them.",
+      "I care more about others than myself, and I won't let anyone hurt them.",
     character: "Naruto Uzumaki",
   },
   {
@@ -52,12 +52,12 @@ export const narutoQuotes = [
     character: "Madara Uchiha",
   },
   {
-    quote: "A person grows up when they’re able to overcome hardships.",
+    quote: "A person grows up when they're able to overcome hardships.",
     character: "Jiraiya",
   },
   {
     quote:
-      "Failing doesn’t give you a reason to give up as long as you believe.",
+      "Failing doesn't give you a reason to give up as long as you believe.",
     character: "Naruto Uzumaki",
   },
   {
@@ -93,7 +93,7 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "You don’t have to forgive me, but no matter what happens, I will always love you.",
+      "You don't have to forgive me, but no matter what happens, I will always love you.",
     character: "Itachi Uchiha",
   },
   {
@@ -110,7 +110,7 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "Rejection is a part of any man’s life. If you can’t accept and move past rejection, you’re not worthy of a man at all.",
+      "Rejection is a part of any man's life. If you can't accept and move past rejection, you're not worthy of a man at all.",
     character: "Jiraiya",
   },
   {
@@ -125,12 +125,12 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "My name is Sasuke Uchiha. I hate a lot of things, and I don’t particularly like anything.",
+      "My name is Sasuke Uchiha. I hate a lot of things, and I don't particularly like anything.",
     character: "Sasuke Uchiha",
   },
   {
     quote:
-      "When you feel the worst in life, take a breath and move forward. That’s the ninja way.",
+      "When you feel the worst in life, take a breath and move forward. That's the ninja way.",
     character: "Naruto Uzumaki",
   },
   { quote: "People cannot win against their loneliness.", character: "Gaara" },
@@ -145,11 +145,11 @@ export const narutoQuotes = [
     character: "Gildarts Clive",
   },
   {
-    quote: "As long as you keep fighting, there’s a chance you’ll survive.",
+    quote: "As long as you keep fighting, there's a chance you'll survive.",
     character: "Kabuto Yakushi",
   },
   {
-    quote: "The world isn’t beautiful. Therefore, it is.",
+    quote: "The world isn't beautiful. Therefore, it is.",
     character: "Kakashi Hatake",
   },
   {
@@ -158,7 +158,7 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "The world is full of pain and suffering. That’s why we need to believe in each other.",
+      "The world is full of pain and suffering. That's why we need to believe in each other.",
     character: "Nagato (Pain)",
   },
   {
@@ -168,7 +168,7 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "I’ve been here long enough to know that the world isn’t a fair place.",
+      "I've been here long enough to know that the world isn't a fair place.",
     character: "Shikamaru Nara",
   },
   {
@@ -185,12 +185,12 @@ export const narutoQuotes = [
     character: "Naruto Uzumaki",
   },
   {
-    quote: "I’d rather be a fool than stay the same.",
+    quote: "I'd rather be a fool than stay the same.",
     character: "Naruto Uzumaki",
   },
   {
     quote:
-      "Growth occurs when one goes beyond one’s limits. Realizing that is also part of training.",
+      "Growth occurs when one goes beyond one's limits. Realizing that is also part of training.",
     character: "Itachi Uchiha",
   },
   {
@@ -208,12 +208,12 @@ export const narutoQuotes = [
   },
   {
     quote:
-      "In society, those who don’t have many abilities tend to complain more.",
+      "In society, those who don't have many abilities tend to complain more.",
     character: "Neji Hyuga",
   },
   {
     quote:
-      "I’m telling you this because you don’t get it. You think you get it, which isn’t the same as actually getting it. Get it?",
+      "I'm telling you this because you don't get it. You think you get it, which isn't the same as actually getting it. Get it?",
     character: "Kakashi Hatake",
   },
 ];
