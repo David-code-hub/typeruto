@@ -103,7 +103,11 @@
         <!--show character details-->
         <div class="w-full flex mt-10 text-white gap-2 justify-end">
           <img
-            :src="characterImagePath"
+            :src="`/images/characters/${
+              rawQuote?.character?.split(' ')?.length > 1
+                ? rawQuote?.character.split(' ')[0].toLowerCase()
+                : rawQuote?.character?.toLowerCase()
+            }.jpg`"
             class="h-9 w-9 rounded-full object-cover border border-white"
             :alt="`${rawQuote?.character} avatar`"
           />
@@ -136,13 +140,6 @@ interface narutoQuote {
 
 const quote = ref<Array<string>>(["n"]);
 const rawQuote = ref<narutoQuote>();
-const characterImagePath = computed(() => {
-  return `/_nuxt/public/images/characters/${
-    rawQuote?.value?.character?.split(" ")?.length > 1
-      ? rawQuote?.value?.character.split(" ")[0].toLowerCase()
-      : rawQuote?.value?.character?.toLowerCase()
-  }.jpg`;
-});
 const wordsTyped = ref("");
 const wordCount = ref(0);
 const remainingTime = ref(0);
