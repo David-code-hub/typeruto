@@ -26,17 +26,17 @@
       </p>
       <div class="flex mt-4 items-center justify-center">
         <img
-          src="~/assets/images/characters/naruto.jpg"
+          src="~/public/images/characters/naruto.jpg"
           class="h-10 w-10 rounded-full object-cover border border-white"
           alt="naruto anime character"
         />
         <img
-          src="~/assets/images/characters/neji.jpg"
+          src="~/public/images/characters/neji.jpg"
           class="h-10 w-10 rounded-full object-cover border border-white -ml-5"
           alt="naruto anime character"
         />
         <img
-          src="~/assets/images/characters/nagato.jpg"
+          src="~/public/images/characters/nagato.jpg"
           class="h-10 w-10 rounded-full object-cover border border-white -ml-5"
           alt="naruto anime character"
         />
