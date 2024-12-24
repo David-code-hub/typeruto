@@ -103,7 +103,7 @@
         <!--show character details-->
         <div class="w-full flex mt-10 text-white gap-2 justify-end">
           <img
-            :src="`/_nuxt/assets/images/characters/${characterImage}.jpg`"
+            :src="characterImagePath"
             class="h-9 w-9 rounded-full object-cover border border-white"
             :alt="`${rawQuote?.character} avatar`"
           />
@@ -136,7 +136,13 @@ interface narutoQuote {
 
 const quote = ref<Array<string>>(["n"]);
 const rawQuote = ref<narutoQuote>();
-const characterImage = ref("");
+const characterImagePath = computed(() => {
+  return `/_nuxt/public/images/characters/${
+    rawQuote?.value?.character?.split(" ")?.length > 1
+      ? rawQuote?.value?.character.split(" ")[0].toLowerCase()
+      : rawQuote?.value?.character?.toLowerCase()
+  }.jpg`;
+});
 const wordsTyped = ref("");
 const wordCount = ref(0);
 const remainingTime = ref(0);
@@ -277,11 +283,6 @@ const handleGetNextQuote = () => {
     loading.value = true;
     timerSeconds.value = 30;
     rawQuote.value = narutoQuotes[Math.floor(Math.random() * 50)];
-
-    characterImage.value =
-      rawQuote?.value?.character!.split(" ").length > 1
-        ? rawQuote?.value?.character.split(" ")[0].toLowerCase()
-        : rawQuote?.value?.character?.toLowerCase();
     changeTextCase();
   } catch (error) {
     console.error("Error while fetching next quote :", error);
