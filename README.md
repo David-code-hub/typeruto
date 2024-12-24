@@ -1,19 +1,16 @@
 # Welcome to Typeru!
 
-![Screenshot 1](https://github.com/user-attachments/assets/5c9f999b-3f1f-46ce-90ae-a163c4f3488a)
+![Screenshot 1](https://github.com/user-attachments/assets/082e29b3-dcfc-4e06-a2e2-5b5864d8c434)
 
-
-A modern typing speed test application built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
-
-[Live Demo ➡️](https://typeru.netlify.app/)
+A anime themed typing speed test app built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
 
 ---
 
 ## Features
 
-- 🕒 **30-Second Timer**
-- 📝 **Words Per Minute (WPM) Calculation**
-- 🛠️ **Built with Nuxt.js and Tailwind CSS**
+- 🕒 30-Second Timer
+- 📝 Words Per Minute (WPM) Calculation
+- 🛠️ Built with Nuxt.js and Tailwind CSS
 
 ---
 
