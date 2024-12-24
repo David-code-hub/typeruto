@@ -103,11 +103,11 @@
         <!--show character details-->
         <div class="w-full flex mt-10 text-white gap-2 justify-end">
           <img
-            :src="`/images/characters/${
-              rawQuote?.character?.split(' ')?.length > 1
+            :src="`/images/characters/min/${
+              rawQuote?.character?.split(' ')?.length || 0 > 1
                 ? rawQuote?.character.split(' ')[0].toLowerCase()
                 : rawQuote?.character?.toLowerCase()
-            }.jpg`"
+            }-min.jpg`"
             class="h-9 w-9 rounded-full object-cover border border-white"
             :alt="`${rawQuote?.character} avatar`"
           />
