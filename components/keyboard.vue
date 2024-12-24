@@ -138,6 +138,7 @@ interface narutoQuote {
   character: string;
 }
 
+const router = useRouter();
 const quote = ref<Array<string>>(["n"]);
 const rawQuote = ref<narutoQuote>();
 const wordsTyped = ref("");
@@ -175,6 +176,7 @@ const handleTimerCountdown = () => {
 
       if (wordCount.value !== 0) calculateWPM();
       handleGetNextQuote();
+      router.push("/rank-results");
       timerSeconds.value = 30;
       isTyping.value = false;
     }
@@ -236,6 +238,8 @@ const checkTyping = (event: KeyboardEvent) => {
     clearInterval(intervalID.value);
     calculateWPM();
     handleGetNextQuote();
+
+    router.push("/rank-results");
     return;
   }
 
