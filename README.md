@@ -10,7 +10,7 @@ A anime themed typing speed test app built with **Nuxt.js**, **Tailwind CSS**, a
 
 - 30-Second Timer
 - Words Per Minute (WPM) Calculation
-- Calculate Rank[in development]
+- Calculate Rank
 - Built with Nuxt.js and Tailwind CSS
 
 ---
