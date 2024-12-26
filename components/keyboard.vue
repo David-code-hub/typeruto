@@ -176,7 +176,10 @@ const handleTimerCountdown = () => {
 
       if (wordCount.value !== 0) calculateWPM();
       handleGetNextQuote();
-      router.push("/rank-results");
+      router.push({
+        path: "/rank-results",
+        query: { wpm: wordsPerMinute.value },
+      });
       timerSeconds.value = 30;
       isTyping.value = false;
     }
@@ -239,7 +242,10 @@ const checkTyping = (event: KeyboardEvent) => {
     calculateWPM();
     handleGetNextQuote();
 
-    router.push("/rank-results");
+    router.push({
+      path: "/rank-results",
+      query: { wpm: wordsPerMinute.value },
+    });
     return;
   }
 

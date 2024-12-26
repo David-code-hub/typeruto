@@ -1,30 +1,53 @@
 <template>
-  <div class="mt-16 max-w-lg">
+  <div class="mt-16 max-w-sm">
     <div
-      class="grid grid-cols-3 gap-5 items-center bg-neutral-800 px-4 py-4 rounded-xl"
+      class="grid grid-cols-3 gap-4 items-center bg-neutral-800 p-7 rounded-xl"
     >
-      <div class="col-span-1">
-        <div class="overflow-hidden w-fit rounded-full group">
-          <img
-            src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExend5ZTJuaHNjMjVtMXRsMG0wd2g1ZXkyYjd3MjlrdWtxeHFpdmE2bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/141u78GarhcaRO/giphy.webp"
-            class="h-24 w-24 object-cover rounded-full duration-300 group-hover:scale-125"
-            alt="itachi avatar"
+      <div v-if="loading" class="w-full col-span-3">
+        <div class="text-center text-gray-400">
+          <Icon
+            name="svg-spinners:180-ring-with-bg"
+            class="size-6 text-orange-400"
           />
+          <p>Calculating rank...</p>
         </div>
       </div>
-      <div class="col-span-2 flex flex-col gap-2 text-sm">
-        <p class="text-gray-400">
-          <span> Rank : </span>
-          <span class="font-semibold"> Missing-nin </span>
+      <div class="col-span-3 flex flex-row gap-3 items-center" v-if="!loading">
+        <div class="">
+          <div class="overflow-hidden w-fit rounded-lg group">
+            <img
+              :src="`/images/characters/rank/${rankNinjaImage}.gif`"
+              class="h-24 w-24 object-cover rounded-lg duration-300 group-hover:scale-125"
+              :alt="`${currentRank.ninja} avatar`"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-1 text-sm">
+          <p class="font-semibold text-gray-300 text-lg">
+            {{ currentRank.ninja }}
+          </p>
+          <p class="text-gray-400">
+            <span> Rank : </span>
+            <span class="font-semibold"> {{ currentRank.rank?.rank }} </span>
+          </p>
+          <p class="text-gray-400">
+            <span> WPM : </span>
+            <span class="font-semibold"> {{ wpm }} </span>
+          </p>
+        </div>
+      </div>
+      <div class="col-span-3" v-if="!loading">
+        <p class="text-gray-400 text-sm">
+          {{ currentRank.rank?.description }}
         </p>
-        <p class="text-gray-400">
-          <span> WPM : </span>
-          <span class="font-semibold"> 94 </span>
-        </p>
-        <p class="text-gray-400">
-          <span> Ninja : </span>
-          <span class="font-semibold"> Itachi Uchiha </span>
-        </p>
+      </div>
+      <div class="col-span-3" v-if="!loading">
+        <button
+          class="text-sm duration-300 focus:outline-none focus:ring-1 focus:ring-orange-400 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
+        >
+          <Icon name="simple-line-icons:camera" class="size-4" />
+          Take Screenshot
+        </button>
       </div>
     </div>
     <p
@@ -43,8 +66,20 @@
 
 <script setup lang="ts">
 const router = useRouter();
+const currentRank = ref({ rank: Object, ninja: String } as Object);
+const rankNinjaImage = ref("");
+const loading = ref(true);
+const wpm = router?.currentRoute?.value?.query?.wpm;
 
-onMounted(() => {
+onMounted(async () => {
+  setTimeout(async () => {
+    currentRank.value = await getRank(wpm);
+    loading.value = false;
+    rankNinjaImage.value =
+      currentRank.value?.ninja?.split(" ")?.length || 0 > 1
+        ? currentRank.value?.ninja?.split(" ")[0].toLowerCase()
+        : currentRank.value?.ninja?.toLowerCase();
+  }, 1000);
   window.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter") router.push("/");
   });
