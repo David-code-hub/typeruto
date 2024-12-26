@@ -72,12 +72,14 @@ const loading = ref(true);
 const wpm = router?.currentRoute?.value?.query?.wpm;
 
 onMounted(async () => {
-  currentRank.value = await getRank(wpm);
-  loading.value = false;
-  rankNinjaImage.value =
-    currentRank.value?.ninja?.split(" ")?.length || 0 > 1
-      ? currentRank.value?.ninja?.split(" ")[0].toLowerCase()
-      : currentRank.value?.ninja?.toLowerCase();
+  setTimeout(async () => {
+    currentRank.value = await getRank(wpm);
+    loading.value = false;
+    rankNinjaImage.value =
+      currentRank.value?.ninja?.split(" ")?.length || 0 > 1
+        ? currentRank.value?.ninja?.split(" ")[0].toLowerCase()
+        : currentRank.value?.ninja?.toLowerCase();
+  }, 1000);
   window.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter") router.push("/");
   });
