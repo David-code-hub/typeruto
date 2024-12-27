@@ -4,7 +4,6 @@
 
 ![Screenshot 2](https://github.com/user-attachments/assets/6b435655-8506-4c40-ac4d-f59d5c0e4e2e)
 
-
 A anime themed typing speed test app built with **Nuxt.js**, **Tailwind CSS**, and **Nuxt Icons**.
 
 ---
@@ -24,6 +23,6 @@ Follow these steps to set up the project locally:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/David-code-hub/type_speed_test.git
+   git clone https://github.com/David-code-hub/typeruto.git
    cd type_speed_test
    ```
