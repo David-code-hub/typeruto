@@ -1,62 +1,15 @@
 <template>
   <div class="w-full" id="keyboard-root">
     <div class="w-full">
-      <!--show count down-->
-      <!-- <div
-        class="flex items-center justify-between rounded-lg w-full"
-        :class="[
-          isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
-        ]"
-      >
-        <span class="text-3xl rounded-lg font-bold text-orange-400">
-          {{ timerSeconds }}s
-        </span>
-
-        <div
-          class="flex bg-slate-800 border border-slate-700 gap-2 rounded-lg items-center py-2 px-3"
-        >
-          <Icon
-            :name="`simple-line-icons:lock${isCapsLock ? '' : '-open'}`"
-            :class="[isCapsLock ? ' bg-orange-400' : 'bg-gray-200']"
-          />
-          <div class="text-gray-400 text-sm">
-            Caps
-            <span class="capitalize">{{ isCapsLock ? "on" : "off" }} </span>
-          </div>
-        </div>
-      </div> -->
       <!--show actions bar-->
       <div class="flex justify-between items-center w-full mb-7">
         <div class="flex gap-5 items-center text-md w-fit blur-none">
-          <!--
-            :class="[
-          !isTyping ? 'duration-300 blur-none h-auto mb-7' : 'blur-3xl h-0',
-        ]"
-          -->
           <span
             class="text-3xl rounded-lg font-bold text-orange-400"
             :class="[!isTyping ? 'opacity-50' : 'opacity-100']"
           >
             {{ timerSeconds }}s
           </span>
-
-          <!-- <div class="flex items-center gap-1 text-gray-300">
-            <span class="text-xl rounded-lg font-bold">
-              {{ wordsPerMinute }}
-              <span class="text-base text-gray-400 font-normal ml-1">Wpm</span>
-            </span>
-          </div>
- -->
-
-          <!-- <div class="flex items-center gap-1 text-gray-300">
-            <span class="text-xl font-semibold">
-              {{ mistakes }}
-
-              <span class="text-base text-gray-400 font-normal ml-1"
-                >Typo{{ mistakes > 1 || mistakes === 0 ? "s" : "" }}</span
-              >
-            </span>
-          </div> -->
         </div>
         <div class="flex gap-3">
           <div
@@ -150,7 +103,7 @@ interface narutoQuote {
 }
 
 const router = useRouter();
-const quote = ref<Array<string>>(["n"]);
+const quote = ref<Array<string>>();
 const rawQuote = ref<narutoQuote>();
 const wordsTyped = ref("");
 const wordCount = ref(0);
