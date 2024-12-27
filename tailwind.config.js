@@ -5,7 +5,7 @@ export default {
     extend: {
       keyframes: {
         flicker: {
-          "0%, 100%": { opacity: "1" },
+          "0%, 100%": { opacity: "0.8" },
           "50%": { opacity: "0" },
         },
       },
