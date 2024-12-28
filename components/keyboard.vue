@@ -97,14 +97,9 @@
 </template>
 
 <script setup lang="ts">
-interface narutoQuote {
-  quote: string;
-  character: string;
-}
-
 const router = useRouter();
-const quote = ref<Array<string>>();
 const rawQuote = ref<narutoQuote>();
+const quote = ref<Array<string>>(narutoQuotes[0].quote.split(""));
 const wordsTyped = ref("");
 const wordCount = ref(0);
 const remainingTime = ref(0);

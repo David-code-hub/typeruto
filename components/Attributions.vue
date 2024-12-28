@@ -1,5 +1,7 @@
 <template>
-  <div class="absolute bottom-5">
+  <!--hidden-->
+  <!--todo: update when UI cleared-->
+  <div class="absolute bottom-5 hidden">
     <div class="text-gray-400 flex items-center gap-1 text-sm">
       Made with ❤️ by
 
