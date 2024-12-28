@@ -1,5 +1,10 @@
 //import lower level data
-export { narutoQuotes, invalidKeys, letterClasses } from "./data";
+export {
+  narutoQuotes,
+  invalidKeys,
+  letterClasses,
+  ninjaSpeedRanks,
+} from "./data";
 
 import { ninjaSpeedRanks } from "./data";
 
