@@ -4,6 +4,7 @@
       <div
         class="grid grid-cols-3 gap-7 mb-3 items-center"
         v-for="rank in ninjaSpeedRanks"
+        :key="rank.rank"
       >
         <div class="col-span-1">
           <p
@@ -11,7 +12,7 @@
             :class="[
               rank.rank === 'S-Class'
                 ? 'text-yellow-400 font-bold'
-                : 'text-gray-400',
+                : 'text-gray-300',
             ]"
           >
             {{ rank.rank }}
@@ -21,9 +22,10 @@
         <div>
           <p class="text-orange-400 text-base">{{ rank.speed }} wpm</p>
         </div>
-        <div class="flex mt-4 items-center justify-center">
+        <div class="flex items-center justify-center">
           <img
             v-for="ninja in rank.ninjas"
+            :key="ninja"
             :src="`/images/characters/rank/${
               ninja?.split(' ')?.length || 0 > 1
                 ? ninja.split(' ')[0].toLowerCase()
