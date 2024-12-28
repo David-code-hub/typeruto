@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 mx-auto text-center">
     <h1 class="font-semibold text-3xl text-gray-300 capitalize">
-      What's your rank?
+      What's your ninja rank?
     </h1>
     <p class="text-md text-gray-400 mt-2">
       Test your typing speed with naruto quotes!

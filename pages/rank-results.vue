@@ -18,17 +18,19 @@
             <img
               :src="`/images/characters/rank/${rankNinjaImage}.gif`"
               class="h-24 w-24 object-cover rounded-lg duration-300 group-hover:scale-125"
-              :alt="`${currentRank.ninja} avatar`"
+              :alt="`${userCurrentRank?.ninja} avatar`"
             />
           </div>
         </div>
         <div class="flex flex-col gap-1 text-sm">
           <p class="font-semibold text-gray-300 text-lg">
-            {{ currentRank.ninja }}
+            {{ userCurrentRank?.ninja }}
           </p>
           <p class="text-gray-400">
             <span> Rank : </span>
-            <span class="font-semibold"> {{ currentRank.rank?.rank }} </span>
+            <span class="font-semibold">
+              {{ userCurrentRank?.rank?.rank }}
+            </span>
           </p>
           <p class="text-gray-400">
             <span> WPM : </span>
@@ -38,7 +40,7 @@
       </div>
       <div class="col-span-3" v-if="!loading">
         <p class="text-gray-400 text-sm">
-          {{ currentRank.rank?.description }}
+          {{ userCurrentRank?.rank?.description }}
         </p>
       </div>
       <div class="col-span-3" v-if="!loading">
@@ -66,19 +68,19 @@
 
 <script setup lang="ts">
 const router = useRouter();
-const currentRank = ref({ rank: Object, ninja: String } as Object);
-const rankNinjaImage = ref("");
+const userCurrentRank = ref<showUserCurrentRank>();
+const rankNinjaImage = ref<string | undefined>();
 const loading = ref(true);
-const wpm = router?.currentRoute?.value?.query?.wpm;
+const wpm = parseInt(router?.currentRoute?.value?.query?.wpm as string);
 
 onMounted(async () => {
   setTimeout(async () => {
-    currentRank.value = await getRank(wpm);
+    userCurrentRank.value = await getRank(wpm);
     loading.value = false;
     rankNinjaImage.value =
-      currentRank.value?.ninja?.split(" ")?.length || 0 > 1
-        ? currentRank.value?.ninja?.split(" ")[0].toLowerCase()
-        : currentRank.value?.ninja?.toLowerCase();
+      userCurrentRank.value?.ninja?.split(" ")?.length || 0 > 1
+        ? userCurrentRank.value?.ninja?.split(" ")[0].toLowerCase()
+        : userCurrentRank.value?.ninja?.toLowerCase();
   }, 1000);
   window.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter") router.push("/");
