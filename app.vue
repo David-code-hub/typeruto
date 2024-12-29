@@ -11,10 +11,10 @@
         </NuxtLink>
         <div class="flex flex-row items-center gap-1">
           <NuxtLink
-            to="/rank-info"
+            to="/rank-list"
             class="text-sm h-fit focus:outline-none focus:ring-1 focus:ring-orange-400 duration-300 hover:bg-neutral-800 px-3 py-1 rounded-full flex gap-1 items-center text-gray-200"
           >
-            Rank Info
+            Rank List
           </NuxtLink>
           <a
             href="https://github.com/David-code-hub/typeruto"
