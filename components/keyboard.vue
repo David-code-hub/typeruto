@@ -77,7 +77,7 @@
           />
           <div class="text-gray-300 font-normal text-sm">
             <p class="text-gray-400 font-normal text-xs">Said By</p>
-            {{ rawQuote?.character }}
+            {{ rawQuote?.character || "undefined" }}
           </div>
         </div>
       </div>
