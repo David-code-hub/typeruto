@@ -38,3 +38,16 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+useSeoMeta({
+  title:
+    "Typeruto - Improve Your Typing Skills Fast and rank up in the world of shinobi.",
+  ogTitle:
+    "Typeruto - Improve Your Typing Skills Fast and rank up in the world of shinobi.",
+  description:
+    "Typeruto - naruto,anime themed typing speed test. Find your rank based on your typing speed.",
+  ogDescription:
+    "Typeruto - naruto,anime themed typing speed test. Find your rank based on your typing speed.",
+  googleSiteVerification: "DCQp_kaun-ovbBszh0BbnnFeSgxogq6z0eA1YRgluY8",
+});
+</script>
