@@ -1,6 +1,12 @@
 import open from "open";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      GOOGLE_SITE_VERIFICATION:
+        process.env.GOOGLE_SITE_VERIFICATION || "Default Value",
+    },
+  },
   hooks: {
     listen(server) {
       open(`http://localhost:${server!.port || 3000}`);
