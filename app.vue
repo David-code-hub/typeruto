@@ -39,6 +39,8 @@
   </div>
 </template>
 <script setup lang="ts">
+const config = useRuntimeConfig();
+
 useSeoMeta({
   title:
     "Typeruto - Improve Your Typing Skills Fast and rank up in the world of shinobi.",
@@ -48,6 +50,6 @@ useSeoMeta({
     "Typeruto - naruto,anime themed typing speed test. Find your rank based on your typing speed.",
   ogDescription:
     "Typeruto - naruto,anime themed typing speed test. Find your rank based on your typing speed.",
-  googleSiteVerification: "DCQp_kaun-ovbBszh0BbnnFeSgxogq6z0eA1YRgluY8",
+  googleSiteVerification: config.public.GOOGLE_SITE_VERIFICATION,
 });
 </script>
