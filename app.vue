@@ -7,7 +7,11 @@
           to="/"
           class="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-800 bg-clip-text text-transparent"
         >
-          Typeruto
+          <img
+            src="@public/images/narutologo.png"
+            class="h-20 w-full bg-white rounded"
+            alt="naruto logo typeruto"
+          />
         </NuxtLink>
         <div class="flex flex-row items-center gap-1">
           <NuxtLink
