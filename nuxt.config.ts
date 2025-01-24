@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   },
   hooks: {
     listen(server) {
-      open(`http://localhost:${server!.port || 3000}`);
+      open(`http://localhost:3000`);
+      // ${server.port || 3000}`
     },
   },
   alias: {
@@ -17,5 +18,8 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@pinia/nuxt"],
+  pinia: {
+    storesDirs: ["./stores/**"],
+  },
 });

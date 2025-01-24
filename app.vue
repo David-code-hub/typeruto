@@ -9,7 +9,7 @@
         >
           <img
             src="@public/images/narutologo.png"
-            class="h-20 w-full bg-white rounded"
+            class="h-14 w-full bg-white rounded"
             alt="naruto logo typeruto"
           />
         </NuxtLink>

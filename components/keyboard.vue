@@ -97,6 +97,7 @@
 </template>
 
 <script setup lang="ts">
+const typingStore = useTypingStore();
 const router = useRouter();
 const rawQuote = ref<narutoQuote>();
 const quote = ref<Array<string>>(narutoQuotes[0].quote.split(""));
@@ -124,6 +125,7 @@ const calculateWPM = () => {
   const elapsedTime = 30 - remainingTime.value;
   if (elapsedTime > 0) {
     wordsPerMinute.value = Math.floor((60 / elapsedTime) * wordCount.value);
+    typingStore.setWpm(wordsPerMinute.value);
   }
 };
 
@@ -137,7 +139,7 @@ const handleTimerCountdown = () => {
       handleGetNextQuote();
       router.push({
         path: "/rank-results",
-        query: { wpm: wordsPerMinute.value },
+        // query: { wpm: wordsPerMinute.value },
       });
       timerSeconds.value = 30;
       isTyping.value = false;
@@ -203,7 +205,7 @@ const checkTyping = (event: KeyboardEvent) => {
 
     router.push({
       path: "/rank-results",
-      query: { wpm: wordsPerMinute.value },
+      // query: { wpm: wordsPerMinute.value },
     });
     return;
   }
