@@ -67,11 +67,14 @@
 </template>
 
 <script setup lang="ts">
+const typingStore = useTypingStore();
 const router = useRouter();
 const userCurrentRank = ref<showUserCurrentRank>();
 const rankNinjaImage = ref<string | undefined>();
 const loading = ref(true);
-const wpm = parseInt(router?.currentRoute?.value?.query?.wpm as string);
+const wpm = typingStore.wpm;
+
+// parseInt(router?.currentRoute?.value?.query?.wpm as string);
 
 onMounted(async () => {
   setTimeout(async () => {
