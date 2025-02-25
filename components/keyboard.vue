@@ -101,16 +101,18 @@ const typingStore = useTypingStore();
 const router = useRouter();
 const rawQuote = ref<narutoQuote>();
 const quote = ref<Array<string>>(narutoQuotes[0].quote.split(""));
-const wordsTyped = ref("");
-const wordCount = ref(0);
-const remainingTime = ref(0);
+const wordsTyped = ref<string>("");
+const wordCount = ref<number>(0);
+const remainingTime = ref<number>(0);
 const loading = ref(true);
-const index = ref(0);
-const mistakes = ref(0);
-const wordsPerMinute = ref(0);
+const index = ref<number>(0);
+const mistakes = ref<number>(0);
+const wordsPerMinute = ref<number>(0);
 const isUppercase = ref(false);
-const currentLetterID = computed(() => quote.value[index.value] + index.value);
-const timerSeconds = ref(30);
+const currentLetterID = computed(
+  (): string => quote.value[index.value] + index.value
+);
+const timerSeconds = ref<number>(30);
 const isTyping = ref(false);
 const intervalID = ref<number | null | any>(null);
 const isCapsLock = ref(false);
