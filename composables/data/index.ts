@@ -1,4 +1,4 @@
-export const narutoQuotes = [
+export const narutoQuotes: Array<narutoQuote> = [
   {
     quote: "Hard work is worthless for those that don't believe in themselves.",
     character: "Naruto Uzumaki",

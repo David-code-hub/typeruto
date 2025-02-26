@@ -29,7 +29,9 @@ export const setInitialCursor = (currentLetterID: string) => {
   }, 100);
 };
 
-export const getRank = async (speed: number) => {
+export const getRank = async (
+  speed: number
+): Promise<{ rank: currentRank; ninja: string } | undefined> => {
   if (ninjaSpeedRanks?.length) {
     const currentRank =
       speed >= 151
@@ -49,6 +51,6 @@ export const getRank = async (speed: number) => {
   }
 };
 
-export const getRankNinja = (currentRank: currentRank) => {
+export const getRankNinja = (currentRank: currentRank): string => {
   return currentRank.ninjas[Math.floor(Math.random() * 3)];
 };
