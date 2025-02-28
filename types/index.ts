@@ -10,7 +10,7 @@ declare global {
     rank: string;
     description: string;
     speed: string;
-    ninjas: string[];
+    ninjas: Array<string>;
   };
 
   type showUserCurrentRank = {

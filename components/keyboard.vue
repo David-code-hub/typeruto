@@ -91,7 +91,7 @@
       >
         Enter
       </span>
-      to reload.
+      to get next quote.
     </p>
   </div>
 </template>
