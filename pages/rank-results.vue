@@ -80,9 +80,12 @@ onMounted(async () => {
   setTimeout(async () => {
     userCurrentRank.value = await getRank(wpm);
     loading.value = false;
+    const splitImageName = userCurrentRank.value?.ninja.split(" ") || [
+      "naruto",
+    ];
     rankNinjaImage.value =
-      userCurrentRank.value?.ninja?.split(" ")?.length || 0 > 1
-        ? userCurrentRank.value?.ninja?.split(" ")[0].toLowerCase()
+      splitImageName?.length || 0 > 1
+        ? splitImageName[0].toLowerCase()
         : userCurrentRank.value?.ninja?.toLowerCase();
   }, 1000);
   window.addEventListener("keydown", (e: KeyboardEvent) => {
