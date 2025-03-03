@@ -74,8 +74,6 @@ const rankNinjaImage = ref<string | undefined>();
 const loading = ref(true);
 const wpm = typingStore.wpm;
 
-// parseInt(router?.currentRoute?.value?.query?.wpm as string);
-
 onMounted(async () => {
   setTimeout(async () => {
     userCurrentRank.value = await getRank(wpm);
@@ -97,5 +95,3 @@ onBeforeUnmount(() => {
   window.removeEventListener("keydown", () => {});
 });
 </script>
-
-<style lang="scss" scoped></style>
