@@ -16,7 +16,7 @@
         <div class="">
           <div class="overflow-hidden w-fit rounded-lg group">
             <img
-              :src="`/images/characters/rank/${rankNinjaImage}.gif`"
+              :src="`/images/characters/${rankNinjaImage}.jpg`"
               class="h-24 w-24 object-cover rounded-lg duration-300 group-hover:scale-125"
               :alt="`${userCurrentRank?.ninja} avatar`"
             />
