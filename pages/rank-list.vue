@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full">
+    <div class="w-full bg-neutral-800 p-7 rounded-2xl mt-10">
       <div
         class="grid grid-cols-3 gap-7 mb-3 items-center"
         v-for="rank in ninjaSpeedRanks"
@@ -26,11 +26,11 @@
           <img
             v-for="ninja in rank.ninjas"
             :key="ninja"
-            :src="`/images/characters/rank/${
+            :src="`/images/characters/${
               ninja?.split(' ')?.length || 0 > 1
                 ? ninja.split(' ')[0].toLowerCase()
                 : ninja?.toLowerCase()
-            }.gif`"
+            }.jpg`"
             class="h-10 w-10 rounded-full object-cover border border-white -ml-3"
             :alt="`${ninja} character`"
           />

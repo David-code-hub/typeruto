@@ -13,28 +13,20 @@
         </div>
         <div class="flex gap-3">
           <div
-            class="flex bg-slate-800 border border-slate-700 gap-2 rounded-lg items-center py-2 px-3"
+            class="flex bg-slate-800 uppercase gap-2 rounded-lg items-center py-2 px-3"
           >
-            <Icon
+          <div class="h-[10px] w-[10px] rounded-full" 
+         :class="isCapsLock ? 'animate-pulse bg-orange-400' : 'bg-slate-700'" 
+          ></div>
+            <!-- <Icon
               :name="`simple-line-icons:lock${isCapsLock ? '' : '-open'}`"
               :class="[isCapsLock ? ' bg-orange-400' : 'bg-gray-200']"
-            />
+            /> -->
             <div class="text-gray-400 text-sm">
               Caps
-              <span class="capitalize">{{ isCapsLock ? "on" : "off" }} </span>
+              <span>{{ isCapsLock ? "on" : "off" }} </span>
             </div>
           </div>
-          <button
-            @click="
-              isUppercase = !isUppercase;
-              changeTextCase();
-            "
-            class="text-sm duration-300 focus:outline-none focus:ring-0 focus:ring-orange-400 disabled:opacity-80 disabled:cursor-not-allowed hover:opacity-80 bg-slate-800 text-gray-400 px-3 py-2 rounded-lg flex gap-1 items-center"
-            :class="{ 'text-orange-400': isUppercase }"
-          >
-            <Icon name="uil:font" class="size-4" />
-            Uppercase
-          </button>
         </div>
       </div>
 
@@ -108,7 +100,6 @@ const loading = ref(true);
 const index = ref<number>(0);
 const mistakes = ref<number>(0);
 const wordsPerMinute = ref<number>(0);
-const isUppercase = ref(false);
 const currentLetterID = computed(
   (): string => quote.value[index.value] + index.value
 );
@@ -147,29 +138,6 @@ const handleTimerCountdown = () => {
       isTyping.value = false;
     }
   }, 1000);
-};
-
-const changeTextCase = () => {
-  const quoteOnly = rawQuote!.value!.quote;
-
-  quote.value = isUppercase.value
-    ? quoteOnly.split("")
-    : quoteOnly.toLowerCase().split("");
-
-  resetLetters();
-};
-
-const resetLetters = () => {
-  index.value = 0;
-
-  // reset classes on all letters
-  const allLetters = document.querySelectorAll(".letter-span");
-  allLetters.forEach((element) => {
-    element.classList.remove(...letterClasses.isBackspace.remove);
-    element.classList.add(...letterClasses.isBackspace.add);
-  });
-
-  setInitialCursor(currentLetterID.value);
 };
 
 const checkIsCapsLock = (event: KeyboardEvent) => {
@@ -252,8 +220,9 @@ const handleGetNextQuote = () => {
     index.value = 0;
     loading.value = true;
     timerSeconds.value = 30;
-    rawQuote.value = narutoQuotes[Math.floor(Math.random() * 50)];
-    changeTextCase();
+    rawQuote.value = narutoQuotes[Math.floor(Math.random() * 49)];
+    //convert to lowercase
+    quote.value = rawQuote.value.quote.split("").map(letter => letter.toLowerCase())
   } catch (error) {
     console.error("Error while fetching next quote :", error);
   } finally {
